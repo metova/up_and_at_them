@@ -2,7 +2,7 @@
 
 [![Up And At Them!](http://img.youtube.com/vi/457nGTf4fsQ/0.jpg)](http://www.youtube.com/watch?v=457nGTf4fsQ)
 
-This gem provides a git inmethod for performing atomic transactions with the capability to rollback. Note that this is for
+This gem provides a method for performing atomic transactions with the capability to rollback. Note that this is for
 any general Ruby operation and does not replace
 [ActiveRecord::Rollback](http://api.rubyonrails.org/classes/ActiveRecord/Rollback.html).
 
