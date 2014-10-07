@@ -25,8 +25,10 @@ Or install it yourself as:
 Create a Transaction which contains all of your commits. Note that the Transaction will run as soon as it is
 initialized.
 
-    UpAndAtThem::Transaction.new commits
-        UpAndAtThem::Commit.new { flags[i] = :committed; if i==3 ; raise 'uh oh!'; end }.on_rollback { flags[i] = :rolled_back }
+    UpAndAtThem::Transaction.new([
+        UpAndAtThem::Commit.new { puts "do something!" }.on_rollback { "undo something!" },
+        UpAndAtThem::Commit.new { puts "do something else!" }.on_rollback { "undo something else!" },
+    ])
 
 See the tests for other example Commit actions within a Transaction.
 
