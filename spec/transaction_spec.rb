@@ -41,4 +41,40 @@ describe UpAndAtThem::Transaction do
       expect { UpAndAtThem::Transaction[commit] }.to raise_error(RuntimeError)
     end
   end
+
+  describe 'duck typed Commits' do
+    class TestCommit
+      attr_reader :state
+
+      def initialize(fail = false)
+        @fail = fail
+        @state = :pending
+      end
+
+      def call
+        @state = :committed
+        raise if @fail
+      end
+
+      def rollback
+        @state = :rolled_back
+      end
+    end
+
+    it 'runs #call on each commit' do
+      commit = TestCommit.new
+      UpAndAtThem::Transaction[commit]
+      expect(commit.state).to eq :committed
+    end
+
+    it 'runs #rollback when the commit fails' do
+      commit1 = TestCommit.new
+      commit2 = TestCommit.new(true)
+      expect { UpAndAtThem::Transaction[commit1, commit2] }.to raise_error
+      expect(commit1.state).to eq :rolled_back
+      expect(commit2.state).to eq :committed
+    end
+
+  end
+
 end

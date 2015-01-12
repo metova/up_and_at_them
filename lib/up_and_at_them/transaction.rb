@@ -1,7 +1,7 @@
 module UpAndAtThem
   class Transaction
 
-    def self.[](tasks)
+    def self.[](*tasks)
       new(tasks)
     end
 

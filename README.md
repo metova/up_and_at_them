@@ -25,10 +25,16 @@ Or install it yourself as:
 Create a Transaction which contains all of your commits. Note that the Transaction will run as soon as it is
 initialized.
 
-    UpAndAtThem::Transaction.new([
-        UpAndAtThem::Commit.new { puts "do something!" }.on_rollback { "undo something!" },
-        UpAndAtThem::Commit.new { puts "do something else!" }.on_rollback { "undo something else!" },
-    ])
+    UpAndAtThem::Transaction[
+      UpAndAtThem::Commit.new { puts "do something!" }.on_rollback { "undo something!" },
+      UpAndAtThem::Commit.new { puts "do something else!" }.on_rollback { "undo something else!" },
+    ]
+
+The `UpAndAtThem::Transaction` array can contain any classes that respond to `#call` and `#rollback`. The
+`UpAndAtThem::Commit` class allows you to define those methods easily:
+
+    UpAndAtThem::Commit.new { "this block will execute on #call" }.on_rollback { "this block will execute on #rollback" }
+    UpAndAtThem::Commit.new { "calling on_rollback is not necessary" }
 
 See the tests for other example Commit actions within a Transaction.
 
