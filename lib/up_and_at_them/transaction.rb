@@ -1,5 +1,10 @@
 module UpAndAtThem
   class Transaction
+
+    def self.[](tasks)
+      new(tasks)
+    end
+
     def initialize(tasks)
       tasks = Array(tasks)
       tasks.each do |t|
@@ -23,5 +28,6 @@ module UpAndAtThem
         raise err
       end
     end
+
   end
 end
