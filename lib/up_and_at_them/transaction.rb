@@ -6,11 +6,7 @@ module UpAndAtThem
     end
 
     def initialize(tasks)
-      tasks = Array(tasks)
-      tasks.each do |t|
-        Commit === t or raise TypeError
-      end
-      @tasks = tasks
+      @tasks = Array(tasks)
       run
     end
 
