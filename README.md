@@ -27,7 +27,7 @@ initialized.
 
     UpAndAtThem::Transaction[
       UpAndAtThem::Commit.new { puts "do something!" }.on_rollback { "undo something!" },
-      UpAndAtThem::Commit.new { puts "do something else!" }.on_rollback { "undo something else!" },
+      UpAndAtThem::Commit.new { puts "do something else!" }.on_rollback { "undo something else!" }
     ]
 
 The `UpAndAtThem::Transaction` array can contain any classes that respond to `#call` and `#rollback`. The
