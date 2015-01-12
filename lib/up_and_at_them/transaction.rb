@@ -12,17 +12,13 @@ module UpAndAtThem
 
     def run
       finished_tasks = []
-      begin
-        @tasks.each do |task|
-          task.call
-          finished_tasks << task
-        end
-      rescue => err
-        finished_tasks.reverse_each do |task|
-          task.rollback
-        end
-        raise err
+      @tasks.each do |task|
+        task.call
+        finished_tasks << task
       end
+    rescue => err
+      finished_tasks.reverse_each(&:rollback)
+      raise err
     end
 
   end
