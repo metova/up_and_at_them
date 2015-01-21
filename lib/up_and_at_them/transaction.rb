@@ -7,18 +7,22 @@ module UpAndAtThem
 
     def initialize(tasks)
       @tasks = Array(tasks)
+      @finished_tasks = []
       run
     end
 
     def run
-      finished_tasks = []
       @tasks.each do |task|
         task.call
-        finished_tasks << task
+        @finished_tasks << task
       end
     rescue => err
-      finished_tasks.reverse_each(&:rollback)
+      rollback
       raise err
+    end
+
+    def rollback
+      @finished_tasks.reverse_each(&:rollback)
     end
 
   end

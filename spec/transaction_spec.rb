@@ -42,6 +42,18 @@ describe UpAndAtThem::Transaction do
     end
   end
 
+  describe '#rollback' do
+    it 'forces a rollback each commit in the transaction' do
+      result = [true, true]
+      commit1 = UpAndAtThem::Commit.new { result[0] = false }.on_rollback { result[0] = true }
+      commit2 = UpAndAtThem::Commit.new { result[1] = false }.on_rollback { result[1] = true }
+      transaction = UpAndAtThem::Transaction[commit1, commit2]
+      expect(result).to eq [false, false]
+      transaction.rollback
+      expect(result).to eq [true, true]
+    end
+  end
+
   describe 'duck typed Commits' do
     class TestCommit
       attr_reader :state
